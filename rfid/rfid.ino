@@ -31,12 +31,19 @@ void loop(){
 
     if(readByte == 2) reading = true; //begining of tag
     if(readByte == 3) reading = false; //end of tag
-
+    Serial.print("Read: ");
+    Serial.println(reading);
+    Serial.print("Byte: ");    
+    Serial.println(readByte);
     if(reading && readByte != 2 && readByte != 10 && readByte != 13){
-      //store the tag
-      Serial.println(readByte);
+      //store the tag   
+      Serial.println("Flag 1"); 
       tagString[index] = readByte;
       index ++;
+    }else if(readByte == 13){
+      Serial.println("Flag 2"); 
+      checkTag(tagString);
+      index=0;
     }
   }
 
@@ -50,20 +57,15 @@ void checkTag(char tag[]){
 //Check the read tag against known tags
 ///////////////////////////////////
   boolean valid=false;
-  
   if (sizeof(tag)==12){
-    Serial.print("Tag Pos: ");
-    Serial.println(tag);
     for (int i=0;i<sizeof(tags);i++){
       if(compareTag(tag, tags[i])){
-        Serial.println(tag);
         valid=true;
       }
     }
     if (valid){
       lightLED(4);
     }else{
-      Serial.println("Why RED!!!");
       lightLED(2);
     }
   }else{
@@ -71,7 +73,12 @@ void checkTag(char tag[]){
   }
   
 }
+char clearTag(char tag[]){
+  for (int i=0;i<sizeof(tags);i++){
+      
+  }
 
+}
 void lightLED(int pin){
 ///////////////////////////////////
 //Turn on LED on pin "pin" for 250ms
