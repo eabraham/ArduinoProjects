@@ -9,7 +9,7 @@
 
 #include <EEPROM.h>
 
-byte master[6]={0x48,0x00,0xE4,0xE3,0x60,0x2F};
+byte master[6]={0x00,0x00,0x00,0x00,0x00,0x00}; //remove master key for security
 byte storedCard[6]; // Stores an ID read from EEPROM
 byte readCard[6]; // Sotres an ID read from the RFID reader
   
